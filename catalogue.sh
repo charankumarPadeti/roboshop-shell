@@ -50,7 +50,7 @@ then
     useradd roboshop
     VALIDATE $? "roboshop user creation"
 else
-    echo -e "roboshop user already exist $Y SKIPPING $N"
+    echo -e "roboshop user already exist $y SKIPPING $N"
 fi
 
 mkdir -p /app
