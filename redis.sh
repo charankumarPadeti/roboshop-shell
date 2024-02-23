@@ -31,26 +31,26 @@ else
     echo -e " $G you are root user $N"
 fi
 
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>> $LOGFILE
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 
 VALIDATE $? " Installing remi release"
 
-dnf module enable redis:remi-6.2 -y &>> $LOGFILE
+dnf module enable redis:remi-6.2 -y 
 
 VALIDATE $? " Enabling redis"
 
-dnf install redis -y &>> $LOGFILE
+dnf install redis -y
 
 VALIDATE $? " Installing redis"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf &>> $LOGFILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis.conf
 
 VALIDATE $? " Alowing remote connections"
 
-systemctl enable redis &>> $LOGFILE
+systemctl enable redis 
 
 VALIDATE $? " Enabled redis"
 
-systemctl start redis &>> $LOGFILE
+systemctl start redis
 
 VALIDATE $? " Started Redis"
