@@ -77,7 +77,7 @@ systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "user daemon reload"
 
-systemctl enable user &>> $LOGFILE
+systemctl enable user  &>> $LOGFILE
 
 VALIDATE $? "Enabling user"
 
