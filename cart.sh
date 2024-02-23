@@ -6,7 +6,6 @@ R="\e[31m"
 G="\e[32m"
 y="\e[33m"
 N="\e[0m"
-MONGODB_HOST=mongodb.charan.fun
 
 TIMESTAMP=$(date +F%-%H-%M-%S)
 
@@ -57,42 +56,33 @@ mkdir -p /app
 
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 
-VALIDATE $? "Downloading user application"
+VALIDATE $? "Downloading cart application"
 
 cd /app
 
-unzip -o /tmp/user.zip &>> $LOGFILE
+unzip -o /tmp/cart.zip &>> $LOGFILE
 
-VALIDATE $? "Unzipping user"
+VALIDATE $? "Unzipping cart"
 
 npm install &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-cp /home/centos/roboshop-shell/user.service /systemd/system/user.service
+#use absolute, because cart.service exists there
+cp /home/centos/roboshop-shell/cart.service /etc/systemd/system/cart.service
+
+VALIDATE $? "Copying cart service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VALIDATE $? "user daemon reload"
+VALIDATE $? "cart daemoon reload"
 
-systemctl enable user &>> $LOGFILE
+systemctl enable cart &>> $LOGFILE
 
-VALIDATE $? "Enabling user"
+VALIDATE $? "Enabling vatalogue"
 
-systemctl start user &>> $LOGFILE
+systemctl start cart &>> $LOGFILE
 
-VALIDATE $? "Starting user"
-
-cp /home/centos/roboshop-shell/mongo.repo /etc/yum.repos.d/mongo.repo
-
-VALIDATE $? "Copying mongodb repo"
-
-dnf install mongodb-org-shell -y &>> $LOGFILE
-
-VALIDATE $? "Installing MongoDB client"
-
-mongo --host $MONGODB_HOST </app/schema/user.js
-
-VALIDATE $? "Loading user data into mangoDB"
+VALIDATE $? "Starting cart"
