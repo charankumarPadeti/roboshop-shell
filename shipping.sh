@@ -51,50 +51,50 @@ mkdir -p /app &>> $LOGFILE
 
 VALIDATE $? "Creating app directory"
 
-curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip
+curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
 
 VALIDATE $? "Downloading shipping"
 
-cd /app
+cd /app &>> $LOGFILE
 
 VALIDATE $? "Moving to app directory"
 
-unzip -o /tmp/shipping.zip
+unzip -o /tmp/shipping.zip &>> $LOGFILE
 
 VALIDATE $? "unzipping shipping"
 
-mvn clean package
+mvn clean package &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-mv target/shipping-1.0.jar shipping.jar
+mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
 
 VALIDATE $? "Renaming jar file"
 
-cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service
+cp /home/centos/roboshop-shell/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
 
 VALIDATE $? "copying shipping service"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "daemon reload"
 
-systemctl enable shipping
+systemctl enable shipping &>> $LOGFILE
 
 VALIDATE $? "Enable shipping"
 
-systemctl start shipping
+systemctl start shipping &>> $LOGFILE
 
 VALIDATE $? "Starting shipping"
 
-dnf install mysql -y
+dnf install mysql -y &>> $LOGFILE
 
 VALIDATE $? "Install mysql client"
 
-mysql -h mysql.charan.fun -uroot -pRoboShop@1 < /app/schema/shipping.sql 
+mysql -h mysql.charan.fun -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
 
 VALIDATE $? "loading shipping data"
 
-systemctl restart shipping
+systemctl restart shipping &>> $LOGFILE
 
 VALIDATE $? "Restart shipping"
