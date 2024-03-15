@@ -20,21 +20,21 @@ do
     echo "$i: $IP_ADDRESS"
 
     aws route53 change-resource-record-sets \
-    --hosted-zone-id $ZONE_ID \
-    --change-batch "
+  --hosted-zone-id $zoneid \
+  --change-batch '
     {
-        "Comment": "Testing creating a record set",
+        "Comment": "Creating a record set for cognito endpoint"
         ,"Changes": [{
-        "Action"              : "CREATE",
+        "Action"              : "CREATE"
         ,"ResourceRecordSet"  : {
-            "Name"              : "$i.$DOAMIN_NAME",
-            ,"Type"             : "A",
-            ,"TTL"              : 1,
+            "Name"              : "'$i'.'$DOAMIN_NAME'"
+            ,"Type"             : "A"
+            ,"TTL"              : 1
             ,"ResourceRecords"  : [{
-                "Value"         : "$IP_ADDRESS"
+                "Value"         : "'$IP_ADDRESS'"
             }]
         }
         }]
-    }
-    "
+    }   
+        '
 done
