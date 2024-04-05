@@ -2,14 +2,14 @@
 
 AMI=ami-0f3c7d07486cad139
 SG_ID=sg-0280acde162fb3c29
-INSTANCES=("mangodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
+INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
 ZONE_ID=Z06442052M5X8F6RMTTUG
 DOAMIN_NAME=charan.fun
 
 for i in "${INSTANCES[@]}"
 do
     echo "instance is: $i"
-    if [ $i == "mangodb" ] || [ $i == "mysql" ] || [ $i == "shipping" ]
+    if [ $i == "mongodb" ] || [ $i == "mysql" ] || [ $i == "shipping" ]
     then
         INSTANCE_TYPE="t3.small"
     else
